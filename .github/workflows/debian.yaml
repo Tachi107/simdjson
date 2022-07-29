@@ -21,12 +21,11 @@ jobs:
     - name: Install dependencies
       run: |
         apt -y update
-        apt -y --no-install-recommends install g++ cmake make pkg-config
+        apt -y --no-install-recommends install g++ cmake ninja-build pkg-config
 
     - name: Build and install
       run: |
-        cmake -B build
-        cmake --build build
+        ctest --build-and-test . build --build-generator Ninja --build-options -DSIMDJSON_DEVELOPER_MODE=ON
         cmake --install build
 
     - name: Test pkg-config
